@@ -77,7 +77,24 @@ def main():
                 # end while loop
                 break
                 # break out of for loop
-            
+
+
+        # to move the rectangle, we just have to adjust the x coordinate of the rectangle
+        # the 1st thing we need to do is listen for different key presses
+        # left arrow key = move left
+        # right arrow key = move right
+        keys = pygame.key.get_pressed()
+       
+        # this function gives you a dictionary of all the keys
+        # the user can press and whether they have been pressed or not
+        if keys[pygame.K_LEFT]:
+            # if they hit the left arrow key, move it to the left by the velocity you want the character to move at
+            player.x -= PLAYER_VEL
+        if keys[pygame.K_RIGHT]:
+            player.x += PLAYER_VEL
+            # you can obviously access player.y, player.width, and player.height too
+            # other keys are pygame.K_SHIFT, pygame.K_SPACE, etc. there are many print them out to see
+
 
 
 
