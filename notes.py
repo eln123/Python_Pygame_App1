@@ -68,10 +68,21 @@ def main():
     # to do this, you want to set up a clock "object" - not dictionary
     clock = pygame.time.Clock() 
 
+    start_time = time.time()
+    # time.time() gives us the current time
+    elapsed_time = 0
 
     while run:
         clock.tick(60)
         # here you are putting in maximum frames per second, or number of times you want while loop to run per second
+
+        elapsed_time = time.time() - start_time
+        # every time we iterate, we are getting what the current time is and subtracting the start time to get number of seconds elapsed 
+        # we can then draw the elapsed time on the screen
+        # which we will do in the draw function for this code
+
+
+
 
         # the first thing to check
         # is whether the player hit the X on the window
@@ -109,7 +120,7 @@ def main():
 
 
 
-        draw(player)
+        draw(player, elapsed_time)
         
     pygame.quit()
 
