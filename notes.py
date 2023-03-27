@@ -30,11 +30,15 @@ PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 60
 PLAYER_VEL = 5
 
+STAR_WIDTH = 10
+STAR_HEIGHT = 20
+STAR_VEL = 3
+
 FONT = pygame.font.SysFont("comicsans", 30)
 # comicsans is the type of font
 # 30 is the font size
 
-def draw(player, eLapsed_time):
+def draw(player, eLapsed_time, stars):
     WIN.blit(BG, (0, 0))
 
     # WIN is the variable for window, as defined above
@@ -65,6 +69,12 @@ def draw(player, eLapsed_time):
     # the second argument is the color you want it to be
     # the 3rd argument, the player, is the coordinates of the rectangle and the width and height of it. Look below for where player is created
 
+    for star in stars:
+        # drawing each star
+        pygame.draw.rect(WIN, "white", star)
+   
+
+
     pygame.display.update()
     # pygame.display.update() updates every time something is drawn on the screen
 
@@ -87,15 +97,45 @@ def main():
     # time.time() gives us the current time
     elapsed_time = 0
 
+    star_add_increment = 2000
+    star_count = 0
+    # we will use this variable to keep a count so we know when to add the next star 
+
+    stars = []
+    # this list is where we will store all of the stars
+    # then draw all the stars in this list onto the screen
+
+    hit = False
+
     while run:
-        clock.tick(60)
-        # here you are putting in maximum frames per second, or number of times you want while loop to run per second
+        star_count += clock.tick(60)
+        # clock tick is storing the number of milliseconds since the last clock tic
+        # for the clock tick, you are putting in maximum frames per second (e.g. 60), or number of times you want while loop to run per second
 
         elapsed_time = time.time() - start_time
         # every time we iterate, we are getting what the current time is and subtracting the start time to get number of seconds elapsed 
         # we can then draw the elapsed time on the screen
         # which we will do in the draw function for this code
 
+        if star_count > star_add_increment:
+            # if this is true, we are going to generate 3 stars to the screen
+            for _ in range(3):
+                                # here we are creating the stars
+                # here, we are adding 3 stars to the screen
+                star_x = random.randint(0, WIDTH - STAR_WIDTH)
+                # here, we are picking a random integer for the x value, within the range of 0 to WIDTH of screen
+                star = pygame.Rect(star_x, -STAR_HEIGHT, STAR_WIDTH, STAR_HEIGHT)
+                # STAR_HEIGHT starts the star at top of screen, it is the Y coordinate
+                # having a negative Y coordinate starts the star a little above the top of the screen
+                # then as we move it down it looks like it came down from above
+                stars.append(star)
+            
+            star_add_increment = max(200, star_add_increment - 50)
+            # 200 means star_add_increment will never be less than 200, it's a min
+            # the - 50 means every time this runs, stars will be added 50 milliseconds faster
+            # but the fastest time increment before it stops is 200 milliseconds, that is max speed
+            # so first stars are added every 2000 milliseconds, then 1950, then 1900, etc until it gets to as fast as 200 millseconds
+            star_count = 0
 
 
 
@@ -133,10 +173,23 @@ def main():
             # other keys are pygame.K_SHIFT, pygame.K_SPACE, etc. there are many print them out to see
 
 
+        for star in stars[:]:
+            # in this loop, we are moving the stars
+            # if the star hits the bottom of the screen,
+            # without hitting our player, we want to get rid of them
+            star.y += STAR_VEL
+            if star.y > HEIGHT:
+                stars.remove(star)
+            elif star.y + star.height >= player.y and star.colliderect(player):
+                # colliderect is a function that tells us if 2 rectangles have collided
+                stars.remove(star)
+                hit = True
+                break
 
 
-        draw(player, elapsed_time)
-        
+        draw(player, elapsed_time, stars)
+     # here we are drawing the stars
+
     pygame.quit()
 
 if __name__ == "__main__":
