@@ -25,6 +25,7 @@ BG = pygame.transform.scale(pygame.image.load("bg.jpeg"), (WIDTH, HEIGHT))
 
 PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 60
+PLAYER_VEL = 5
 
 def draw(player):
     WIN.blit(BG, (0, 0))
@@ -62,7 +63,16 @@ def main():
     # remember when y = 0, you are at the top of the screen
     # and going down the height increases positively
 
+    # the speed the character moves at is determined by how fast the while loop runs
+    # you want the speed to be consistent, without depending on the computer it is running on
+    # to do this, you want to set up a clock "object" - not dictionary
+    clock = pygame.time.Clock() 
+
+
     while run:
+        clock.tick(60)
+        # here you are putting in maximum frames per second, or number of times you want while loop to run per second
+
         # the first thing to check
         # is whether the player hit the X on the window
         # if they did you want to close the window
