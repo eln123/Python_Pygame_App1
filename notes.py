@@ -23,9 +23,12 @@ pygame.display.set_caption("Space Dodge")
 BG = pygame.transform.scale(pygame.image.load("bg.jpeg"), (WIDTH, HEIGHT))
 # this scales our image to be the width and height
 
-def draw():
+PLAYER_WIDTH = 40
+PLAYER_HEIGHT = 60
+
+def draw(player):
     WIN.blit(BG, (0, 0))
-    pygame.display.update()
+
     # WIN is the variable for window, as defined above
     # blit is a function when you want to draw an image
     # or a surface (the Python term is surface) on the screen
@@ -39,10 +42,25 @@ def draw():
     # so we are going to put (0, 0) as the coordinates of where the top left hand corner of this background
     # image should be placed
     # then width and height will fill the screen
+  
+
+    pygame.draw.rect(WIN, "red", player)
+    # the first argument is where you want to draw the rectangle (player)
+    # the second argument is the color you want it to be
+    # the 3rd argument, the player, is the coordinates of the rectangle and the width and height of it. Look below for where player is created
+
+    pygame.display.update()
     # pygame.display.update() updates every time something is drawn on the screen
+
 
 def main():
     run = True
+
+    player = pygame.Rect(200, HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT)
+    # pass the starting x position, starting y position, width and height of the player 
+    # the y position is a calculation used to get the player at the bottom of the screen
+    # remember when y = 0, you are at the top of the screen
+    # and going down the height increases positively
 
     while run:
         # the first thing to check
@@ -60,7 +78,10 @@ def main():
                 break
                 # break out of for loop
             
-        draw()
+
+
+
+        draw(player)
         
     pygame.quit()
 
