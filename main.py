@@ -27,9 +27,12 @@ def main():
     run = True
 
     player = pygame.Rect(200, HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT)
-   
 
+    clock = pygame.time.Clock()
+    
     while run:
+        clock.tick(60)
+      
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
