@@ -1,6 +1,9 @@
 import pygame
 import time
 import random
+pygame.font.init()
+# we need to initialize the font module to render (draw) text
+# this is a pygame requirement
 
 WIDTH, HEIGHT = 1000, 800
 # they are capitalized because
@@ -27,7 +30,11 @@ PLAYER_WIDTH = 40
 PLAYER_HEIGHT = 60
 PLAYER_VEL = 5
 
-def draw(player):
+FONT = pygame.font.SysFont("comicsans", 30)
+# comicsans is the type of font
+# 30 is the font size
+
+def draw(player, eLapsed_time):
     WIN.blit(BG, (0, 0))
 
     # WIN is the variable for window, as defined above
@@ -43,6 +50,14 @@ def draw(player):
     # so we are going to put (0, 0) as the coordinates of where the top left hand corner of this background
     # image should be placed
     # then width and height will fill the screen
+
+    time_text = FONT.render("Time: " + str(round(eLapsed_time)) + "s", 1, "white")
+    # the round function rounds the time to the nearest second
+    # the 1 stands for Anti-Aliasing, makes your text look better
+    # white is color of text
+
+    WIN.blit(time_text, (10, 10))
+    # (10, 10) are the coordinates you want it to display at
   
 
     pygame.draw.rect(WIN, "red", player)
