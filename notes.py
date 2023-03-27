@@ -186,6 +186,18 @@ def main():
                 hit = True
                 break
 
+        if hit:
+            lost_text = FONT.render("You Lost!", 1, "white")
+            WIN.blit(lost_text, ((WIDTH / 2) - lost_text.get_width() / 2, HEIGHT / 2 - lost_text.get_height()/2))
+            # we have to calculate the coordinates so that the text will show up in the middle of screen, not too far to the right, or too high, so you need to take width and height of text into account
+            pygame.display.update()
+            # ^ this updates the screen after the window is blitted with lost_text puts the lost_text on the screen
+            pygame.time.delay(4000)  
+            # ^ this freezes the game
+            break  
+            # ^ this breaks us out of the while loop, ending the game
+
+
 
         draw(player, elapsed_time, stars)
      # here we are drawing the stars
