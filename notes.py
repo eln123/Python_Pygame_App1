@@ -97,10 +97,11 @@ def main():
        
         # this function gives you a dictionary of all the keys
         # the user can press and whether they have been pressed or not
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and player.x - PLAYER_VEL >= 0:
             # if they hit the left arrow key, move it to the left by the velocity you want the character to move at
+            # the and statement, keeps the player from going off the screen
             player.x -= PLAYER_VEL
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] and player.x + player.width + PLAYER_VEL <= WIDTH:
             player.x += PLAYER_VEL
             # you can obviously access player.y, player.width, and player.height too
             # other keys are pygame.K_SHIFT, pygame.K_SPACE, etc. there are many print them out to see
